@@ -2,6 +2,7 @@ import os
 import json
 import requests
 
+# Set CLIENT_ID and CLIENT_SECRET as environment variables
 CLIENT_ID = os.environ.get("SPOTIFY_CLIENT_ID")
 CLIENT_SECRET = os.environ.get("SPOTIFY_CLIENT_SECRET")
 AUTH_URL = "https://accounts.spotify.com/api/token"
