@@ -26,23 +26,43 @@ def get_access_token(url, client_id, client_secret):
         raise SystemExit(error) from error
 
 
-def connect_to_endpoint(request, headers):
+def multiple_audio_features_endpoint(ids, headers):
     try:
-        response = requests.get(BASE_URL + f"{request}", headers=headers)
+        response = requests.get(
+            BASE_URL + f"audio-features?ids={ids}",
+            headers=headers
+        )
         response.raise_for_status()
         return response.json()
     except requests.exceptions.HTTPError as error:
         raise SystemExit(error) from error
 
 
-def main():
-    access_token_header = get_access_token(AUTH_URL, CLIENT_ID, CLIENT_SECRET)
-    album_tracks_response = connect_to_endpoint(
-        'playlists/37i9dQZEVXbNG2KDcFcKOF/tracks',
-        access_token_header
-    )
-    print(album_tracks_response)
+def playlist_tracks_endpoint(id, headers, **query_args):
+    if query_args is not None:
+        args = [f"{param}={val}" for param, val in query_args.items()]
+        query_str = "?" + "&".join(args)
+    else:
+        query_str = None
+
+    try:
+        response = requests.get(
+            BASE_URL + f"playlists/{id}/tracks" + query_str,
+            headers=headers
+        )
+        response.raise_for_status()
+        return response.json()
+    except requests.exceptions.HTTPError as error:
+        raise SystemExit(error) from error
 
 
-if __name__ == "__main__":
-    main()
+def general_endpoint(uri, headers):
+    try:
+        response = requests.get(
+            uri,
+            headers=headers
+        )
+        response.raise_for_status()
+        return response.json()
+    except requests.exceptions.HTTPError as error:
+        raise SystemError(error) from error
