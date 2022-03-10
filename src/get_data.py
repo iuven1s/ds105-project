@@ -1,5 +1,3 @@
-from turtle import pd
-from webbrowser import get
 import pandas as pd
 import numpy as np
 from src.api_functions import *
