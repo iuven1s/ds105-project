@@ -3,8 +3,8 @@ Helper functions to make requests to Spotify's APIs.
 """
 
 import os
-import requests
 from time import sleep
+import requests
 
 # Set CLIENT_ID and CLIENT_SECRET as environment variables
 CLIENT_ID = os.environ.get("SPOTIFY_CLIENT_ID")
@@ -44,6 +44,33 @@ def get_access_token(client_id, client_secret):
         raise SystemExit(error) from error
 
 
+def multiple_tracks_info_endpoint(ids, headers):
+    """Gets metadata on tracks (max 100)
+
+    Args:
+        ids (str): Comma delimited track ids (e.g. abc,def,ghi)
+        headers (str): Header containing bearer token
+
+    Raises:
+        SystemExit: Raised if 200 is not received
+
+    Returns:
+        dict: Track metadata
+    """
+    try:
+        response = requests.get(
+            BASE_URL + f"tracks?ids={ids}",
+            headers=headers
+        )
+        response.raise_for_status()
+        return response.json()
+    except requests.exceptions.HTTPError as error:
+        if response.status_code == 429:
+            sleep(int(response.headers['Retry-After']))
+            return multiple_tracks_info_endpoint(id, headers)
+        raise SystemExit(error) from error
+
+
 def multiple_audio_features_endpoint(ids, headers):
     """Get Audio Features on multiple tracks (max 100)
 
@@ -65,6 +92,9 @@ def multiple_audio_features_endpoint(ids, headers):
         response.raise_for_status()
         return response.json()
     except requests.exceptions.HTTPError as error:
+        if response.status_code == 429:
+            sleep(int(response.headers['Retry-After']))
+            return multiple_audio_features_endpoint(ids, headers)
         raise SystemExit(error) from error
 
 
@@ -97,7 +127,10 @@ def playlist_tracks_endpoint(playlist_id, headers, **query_args):
         response.raise_for_status()
         return response.json()
     except requests.exceptions.HTTPError as error:
-            raise SystemExit(error) from error
+        if response.status_code == 429:
+            sleep(int(response.headers['Retry-After']))
+            return playlist_tracks_endpoint(playlist_id, headers, **query_args)
+        raise SystemExit(error) from error
 
 
 def general_endpoint(href, headers):
@@ -121,4 +154,7 @@ def general_endpoint(href, headers):
         response.raise_for_status()
         return response.json()
     except requests.exceptions.HTTPError as error:
-        raise SystemError(error) from error
+        if response.status_code == 429:
+            sleep(int(response.headers['Retry-After']))
+            return general_endpoint(href, headers)
+        raise SystemExit(error) from error
