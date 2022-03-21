@@ -1,7 +1,5 @@
 import pandas as pd
 import numpy as np
-from os.path import exists
-from datetime import datetime
 from api_functions import *
 
 PLAYLIST_IDS = {
@@ -111,6 +109,7 @@ def main():
         tracks_df = pd.merge(playlist_df, info_with_features_df, left_index=True, right_index=True)
         tracks_df.dropna(inplace=True)
         tracks_df.to_pickle(f"data_deprecated/spotify_dataset_{playlist_name}.pkl")
+        print(f"Saved {playlist_name} playlist")
 
 
 if __name__ == "__main__":
