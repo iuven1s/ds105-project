@@ -108,7 +108,7 @@ def main():
         info_with_features_df = pd.merge(track_info_df, audio_features_df, left_index=True, right_index=True)
         tracks_df = pd.merge(playlist_df, info_with_features_df, left_index=True, right_index=True)
         tracks_df.dropna(inplace=True)
-        tracks_df.to_pickle(f"data_deprecated/spotify_dataset_{playlist_name}.pkl")
+        tracks_df.to_pickle(f"data/spotify_dataset_{playlist_name}.pkl")
         print(f"Saved {playlist_name} playlist")
 
 
