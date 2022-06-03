@@ -8,6 +8,7 @@ minimal_mistakes_skin   : "dark"
 title                   : "Spotify Track Genre Predictor"
 title_separator         : "-"
 subtitle                : "A DS105L Project"
+layout                  : single
 
 markdown: kramdown
 highlighter: rouge
