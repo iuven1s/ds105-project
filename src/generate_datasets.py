@@ -55,26 +55,6 @@ def prepare_ids_for_query(ids, max_len=100):
     return split_ids
 
 
-def get_release_date(data):
-    try:
-        return pd.to_datetime(data['album']['release_date']).year
-    except:
-        return pd.NA
-
-
-def create_track_info_df(track_info_list):
-    all_tracks_info_df = pd.DataFrame()
-    # For each length-50 grouping of tracks
-    for tracks in track_info_list:
-        tracks_info = tracks['tracks']
-        tracks_ids = [data['id'] for data in tracks_info]
-        tracks_release_year = [get_release_date(data) for data in tracks_info]
-        tracks_popularity = [data['popularity'] for data in tracks_info]
-        tracks_info_df = pd.DataFrame({'release_year': tracks_release_year, 'popularity': tracks_popularity}, index=tracks_ids)
-        all_tracks_info_df = pd.concat([all_tracks_info_df, tracks_info_df])
-    return all_tracks_info_df
-
-
 def create_audio_features_df(audio_features_list):
     all_audio_features_df = pd.DataFrame()
     # For each length-100 grouping of tracks
@@ -96,17 +76,12 @@ def main():
         playlist_df = create_playlist_df(playlist_data, playlist_name)
 
         track_ids = playlist_df.index
-        # Max ids is 100 for Audio Features, but 50 for Get Several Tracks
-        ids_list_100, ids_list_50 = prepare_ids_for_query(track_ids), prepare_ids_for_query(track_ids, 50)
+        ids_list_100 = prepare_ids_for_query(track_ids)
 
-        all_tracks_info_list = [multiple_tracks_info_endpoint(ids, access_token_header) for ids in ids_list_50]
         all_audio_features_list = [multiple_audio_features_endpoint(ids, access_token_header) for ids in ids_list_100]
-
-        track_info_df = create_track_info_df(all_tracks_info_list)
         audio_features_df = create_audio_features_df(all_audio_features_list)
 
-        info_with_features_df = pd.merge(track_info_df, audio_features_df, left_index=True, right_index=True)
-        tracks_df = pd.merge(playlist_df, info_with_features_df, left_index=True, right_index=True)
+        tracks_df = pd.merge(playlist_df, audio_features_df, left_index=True, right_index=True)
         tracks_df.dropna(inplace=True)
         tracks_df.to_pickle(f"data/spotify_dataset_{playlist_name}.pkl")
         print(f"Saved {playlist_name} playlist")
