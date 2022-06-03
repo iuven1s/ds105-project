@@ -1,2 +1,2 @@
-# Spotify Genre Predictor - A DS105L Project
+# Executive Summary
 Lorem ipsum
