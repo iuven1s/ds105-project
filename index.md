@@ -39,7 +39,7 @@ As mentioned earlier, our primary data source is Every Noise at Once. We manuall
 Once we had all the audio features, we merged everything together and stored our final dataset in one pandas dataframe which we also serialised for local storage. This dataset initially contained 7,451 tracks with information on the ID, artist(s), name, genre, and 13 audio features. Summary statistics can be seen below:
 
 
-![barplot showing count of all genres](https://raw.githubusercontent.com/iuven1s/ds105-project/main/img/all_genres.png)
+![barplot showing count of all genres](https://raw.githubusercontent.com/iuven1s/ds105-project/main/img/all_genres_2.png)
 
 
 |                      | Danceability | Energy   | Key       | Loudness   | Mode     | Speechiness | Acousticness | Instrumentalness | Liveness | Valence  | Tempo      | Duration (ms) | Time Signature |
