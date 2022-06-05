@@ -69,7 +69,7 @@ After preprocessing our data, we used a Label Powerset approach with a Logistic 
 From both our decision tree and logistic regression approaches, we learned many things about the relationship between the audio features of a track and its genre, as well as the relationships between genres in general.
 
 Firstly, with the decision tree, we were able to interpret feature importance in the model and find which variables were most important when determining the genre of a track. Often, the features were characteristic of that genre in general, meaning the model was able to pick up on important features successfully. For example, classical music mostly had low loudness and low danceability as its most important features. EDM's most important variables were high energy and high tempo, and pop was typically short in duration and loud. Some of the other genre's decision trees were a little harder to interpet, as the depth of the trees were deeper, but nonetheless all trees generally seemed to follow a pattern of feature importance which made sense for the genre.
-<center>
+
 | **Genre** | **Accuracy** |
 |-----------|--------------|
 | Classical | 93%          |
@@ -81,13 +81,14 @@ Firstly, with the decision tree, we were able to interpret feature importance in
 | Rap       | 69%          |
 | RnB       | 73%          |
 | Rock      | 75%          |
-</center>
+
 We suspect the above accuracy values are due to how distinct these genres are from one another in terms of audio features. For example, the class of classical music as a whole tends to be more uniform in its audio features compared to, say, EDM (which, in real life, has many subgenres); the standard deviation for some of the important features are, on the whole, lower for classical music than for EDM (see danceability, energy and speechiness). Loudness is a little bit harder to interpret because dB is a logarithmic scale; classical music is quieter (-23 dB average compared to -6 dB for EDM) and the scale is more sensitive at this end of the scale, so a higher standard deviation is expected.
 
 | **Genre** | **Danceability** | **Energy** | **Key**  | **Loudness** | **Mode** | **Speechiness** | **Acousticness** | **Instrumentalness** | **Liveness** | **Valence** | **Tempo** | **Duration** | **Time signature** |
 |-----------|------------------|------------|----------|--------------|----------|-----------------|------------------|----------------------|--------------|-------------|-----------|--------------|--------------------|
 | Classical | 0.131175         | 0.096639   | 3.403792 | 6.190403     | 0.471951 | 0.015401        | 0.078896         | 0.359251             | 0.082796     | 0.160197    | 29.417205 | 164007.7     | 0.719302           |
 | EDM       | 0.126013         | 0.122626   | 3.638411 | 1.948147     | 0.500219 | 0.062831        | 0.113523         | 0.273418             | 0.150812     | 0.214103    | 18.159212 | 47162.902561 | 0.215304           |
+
 <p align="center">Standard deviation for Classical and EDM</p>
 
 From the 
