@@ -6,6 +6,7 @@ import os
 from time import sleep
 import requests
 
+
 # Set CLIENT_ID and CLIENT_SECRET as environment variables
 CLIENT_ID = os.environ.get("SPOTIFY_CLIENT_ID")
 CLIENT_SECRET = os.environ.get("SPOTIFY_CLIENT_SECRET")
@@ -103,6 +104,31 @@ def playlist_tracks_endpoint(playlist_id, headers, **query_args):
         if response.status_code == 429:
             sleep(int(response.headers['Retry-After']))
             return playlist_tracks_endpoint(playlist_id, headers, **query_args)
+        raise SystemExit(error) from error
+
+
+def search_track_endpoint(query, headers):
+    """Searches for tracks based on query. Max output is 20 tracks
+    Args:
+        query (str): Query for track
+        headers (str): Header containing bearer token
+    Raises:
+        SystemExit: Raised if 200 not received
+    Returns:
+        dict: 20 or less matching queries
+    """
+    query = query.replace(" ", "+")
+    try:
+        response = requests.get(
+            BASE_URL + f"search?q={query}&type=track",
+            headers=headers
+        )
+        response.raise_for_status()
+        return response.json()
+    except requests.exceptions.HTTPError as error:
+        if response.status_code == 429:
+            sleep(int(response.headers['Retry-After']))
+            return playlist_tracks_endpoint(query, headers)
         raise SystemExit(error) from error
 
 
