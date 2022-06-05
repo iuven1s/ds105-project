@@ -12,6 +12,7 @@ GENRES = ['classical', 'country', 'edm', 'hip-hop', 'jazz', 'pop', 'rap', 'rnb',
 # Drop artists and name so only feature values are stored in dataset
 tracks = pd.read_pickle(getcwd() + "/data/spotify_dataset_all.pkl")
 cleaned_tracks = tracks.drop(['artists', 'name'], axis=1)
+cleaned_tracks.drop(['energy', 'acousticness'], axis=1, inplace=True)
 
 # Drop genre indicators and normalise all values
 normaliser = MinMaxScaler()

@@ -64,6 +64,8 @@ def create_audio_features_df(audio_features_list):
         features_df = pd.DataFrame(audios_features, index=tracks_ids)
         # Drop irrelevant columns
         features_df.drop(['type', 'id', 'uri', 'track_href', 'analysis_url'], axis=1, inplace=True)
+        # Drop colinear variables
+        features_df.drop(['energy', 'acousticness'], axis=1, inplace=True)
         all_audio_features_df = pd.concat([all_audio_features_df, features_df])
     return all_audio_features_df
 

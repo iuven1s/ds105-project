@@ -65,6 +65,8 @@ After this model, we thought more carefully about our dataset. The most troublin
 
 After preprocessing our data, we used a Label Powerset approach with a Logistic Regression base classifier using scikit-multilearn and scikit-learn. Essentially, the Label Powerset approach transforms our multilabel problem into a multiclass problem such that we can iteratively apply a logistic regression for each song against each genre. Once again, we used an 80/20 split for our training and testing data and trained our model. We found that, on average, the model performs with around 45-50% accuracy (using scikit-learn's `accuracy_score` metric).
 
+After we were happy with our model, we developed a frontend in HTML/CSS and used Flask to develop a web app which we deployed to Heroku for anyone to play around with.
+
 ## Results
 From both our decision tree and logistic regression approaches, we learned many things about the relationship between the audio features of a track and its genre, as well as the relationships between genres in general.
 
@@ -91,10 +93,25 @@ We suspect the above accuracy values are due to how distinct these genres are fr
 
 <p align="center">Standard deviation for Classical and EDM</p>
 
-From the 
+From the logistic regression, we were able to classify multi-genre songs successfully rather than partially identifying them (as was the case with our first model). Though this resulted in a lower overall accuracy, we believe this was the right way to go. This is because in a multi-label problem, the `accuracy_score` metric is especially strict. It looks for exact matches (i.e. 100% correct labels), which is hard to achieve given the nature of our problem and dataset. In reality, this model was often partially succesful a lot, and through the `predict_proba` function, we observed that it would often find other relevant genres for the track with a significant probability compared to irrelevant genres. However, one thing we noted is that the model often paired labels together (like hip-hop and rap) for many songs, even if they did not belong to both genres. To see why, we created a weighted graph to visualise our training set of multi-genre tracks.
+
+![weighted graph of songs with multiple genres](https://raw.githubusercontent.com/iuven1s/ds105-project/main/weighted_graph.png)
+
+<p align="center">Weighted graph of multi-genre songs</p>
+
+From the above, we can see two especially important observations. The first is that within our training data, songs that are tagged with more than one genre are most likely to be hip-hop and rap. This explains the high conflation between the two genres that we observed from our tests. The second important observation is that pop has the greatest number of edges (6), and is most often paired with RnB (129 songs) and EDM (102 songs). This means that there are several songs that may belong to subgenres (like a blend of hip-hop and EDM) that are not sufficiently captured by the training data in our model, and so are likely to be incorrectly predicted or simply underpredicted.
+
+Another interesting observation we found was that there are several subgenres (which are arguably prominent enough to be genres of their own) which get pooled in to one specific genre *consistently*, suggesting a relationship between the two genres. For example, we found that many indie songs consistently got pooled in to country music, which may suggest that indie music may, to some extent, have country foundations. To verify this, we looked at an indie song and a country song to see if we could spot similarities in terms of audio features.
+
+| **Genre**                     | **Danceability**    | **Key**             | **Loudness**         | **Mode**            | **Speechiness**     | **Instrumentalness** | **Liveness**        | **Valence**         | **Tempo**              | **Duration**                 | **Time signature**  |
+|-------------------------------|---------------------|---------------------|----------------------|---------------------|---------------------|----------------------|---------------------|---------------------|------------------------|------------------------------|---------------------|
+| Country mean (std)            | 0.597075 (0.102160) | 5.363940 (3.289453) | -7.794209 (3.484563) | 0.938230 (0.240938) | 0.039264 (0.025494) | 0.001164 (0.010500)  | 0.169823 (0.121041) | 0.591649 (0.223939) | 125.072851 (30.409445) | 212132.921536 (37382.247498) | 3.956594 (0.203939) |
+| West Coast by Coconut Records | 0.532               | 10                  | -6.109               | 1                   | 0.0261              | 0.000123             | 0.0643              | 0.345               | 80.031                 | 210106                       | 1                   |
+
+From the above, we can see that one example of an indie song ([West Coast by Coconut Records](https://open.spotify.com/track/2nvZv4qatgsDIbEqqbQLUT?si=768b46ca4d1740c4)) has all the hallmarks of a country song, despite not being country! It has strikingly similar values for almost all variables, apart from key, tempo, and time signature. Hence, the similar feature profile (despite different sound and feel) could suggest there are perhaps some similarities between country and indie music beyond what we would initially suspect.
 
 ## Conclusion
-Lorem ipsum
+Ambiguity in audio features. Everynoise is not comprehensive/exhaustive. Feature importance is lost with label powerset. A genre's sound evolves. 
 
 ## Appendix
 - [Spotify Web API Documentation](https://developer.spotify.com/documentation/web-api/reference)

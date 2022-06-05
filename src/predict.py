@@ -22,6 +22,7 @@ GENRE_LIST = {
 def get_audio_features(track_id):
     track_features = pd.DataFrame(general_endpoint(BASE_URL + f'audio-features/{track_id}', headers=token), index=[track_id,])
     track_features.drop(['type', 'id', 'uri', 'track_href', 'analysis_url'], axis=1, inplace=True)
+    track_features.drop(['energy', 'acousticness'], axis=1, inplace=True)
     return track_features
 
 
@@ -40,3 +41,5 @@ def predict(model, track_id):
     prediction = [GENRE_LIST[genre_idx] for genre_idx in genres_list]
     probabilities = {genre: probabilities_array[index] for index, genre in GENRE_LIST.items()}
     return (prediction, probabilities)
+
+print(get_audio_features('2nvZv4qatgsDIbEqqbQLUT'))
