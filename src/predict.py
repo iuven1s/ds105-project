@@ -41,5 +41,3 @@ def predict(model, track_id):
     prediction = [GENRE_LIST[genre_idx] for genre_idx in genres_list]
     probabilities = {genre: probabilities_array[index] for index, genre in GENRE_LIST.items()}
     return (prediction, probabilities)
-
-print(get_audio_features('2nvZv4qatgsDIbEqqbQLUT'))
