@@ -9,5 +9,8 @@ This DS105L project classifies the genre of given tracks (available on Spotify) 
 ## Why?
 We made this project in fulfillment of the requirements for the DS105L course taught by the [DSI](https://www.lse.ac.uk/DSI) at LSE. But also because we like music! 🎵
 
-## How can I test out the model?
+## How can I test it out?
 Our model is available online [here](https://ds105.herokuapp.com) (it may be a little slow to load at first because the dynos may be asleep! 💤).
+
+## Where can I learn more about this project?
+You can read our project report on our gh-pages: [Predicting Track Genres using Audio Features](https://iuven1s.github.io/ds105-project) ✍️
