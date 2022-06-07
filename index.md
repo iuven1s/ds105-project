@@ -42,7 +42,7 @@ Once we had all the audio features, we merged everything together and stored our
 ![barplot showing count of all genres](https://raw.githubusercontent.com/iuven1s/ds105-project/main/img/all_genres_2.png)
 
 
-|                      | Danceability | Energy   | Key       | Loudness   | Mode     | Speechiness | Acousticness | Instrumentalness | Liveness | Valence  | Tempo      | Duration (ms) | Time Signature |
+|                      | **Danceability** | **Energy**   | **Key**       | **Loudness**   | **Mode**    | **Speechiness** | **Acousticness** | **Instrumentalness** | **Liveness** | **Valence**  | **Tempo**      | **Duration (ms)** | **Time Signature** |
 |----------------------|--------------|----------|-----------|------------|----------|-------------|--------------|------------------|----------|----------|------------|---------------|----------------|
 | Count                | 7451         | 7451     | 7451      | 7451       | 7451     | 7451        | 7451         | 7451             | 7451     | 7451     | 7451       | 7451          | 7451           |
 | Mean                 | 0.615136     | 0.612725 | 5.289894  | -8.438428  | 0.605422 | 0.101815    | 0.259658     | 0.100764         | 0.179561 | 0.489036 | 118.203124 | 238294.7      | 3.937726       |
@@ -75,16 +75,16 @@ Firstly, with the decision tree, we were able to interpret feature importance in
 | **Genre** | **Accuracy** |
 |-----------|--------------|
 | Classical | 93%          |
+| Jazz      | 90%          |
+| Hip-hop   | 85%          |
 | Country   | 84%          |
 | EDM       | 79%          |
-| Hip-hop   | 85%          |
-| Jazz      | 90%          |
+| Rock      | 75%          |
+| RnB       | 73%          |
 | Pop       | 71%          |
 | Rap       | 69%          |
-| RnB       | 73%          |
-| Rock      | 75%          |
 
-We suspect this is due to how audio features vary within a genre. For example, the class of classical music as a whole tends to be more uniform in its audio features compared to EDM (which, in real life, has many subgenres), and we observe that the standard deviation for some of the important features are, on the whole, lower for classical music than for EDM (see danceability, energy and speechiness). Loudness is a little bit harder to interpret because dB is a logarithmic scale; classical music is quieter (-23 dB average compared to -6 dB average for EDM) and the scale is more sensitive at the lower end of the scale, so a higher standard deviation is expected.
+We suspect this is due to how audio features vary within a genre. For example, the class of classical music as a whole tends to be more uniform in its audio features compared to EDM (which, in real life, has many subgenres), and we observe that the standard deviation for some of the important features are, on the whole, lower for classical music than for EDM (see energy, speechiness, etc.). Loudness is a little bit harder to interpret because dB is a logarithmic scale; classical music is quieter (-23 dB average compared to -6 dB average for EDM) and the scale is more sensitive at the lower end of the scale, so a higher standard deviation is expected.
 
 | **Genre** | **Danceability** | **Energy** | **Key**  | **Loudness** | **Mode** | **Speechiness** | **Acousticness** | **Instrumentalness** | **Liveness** | **Valence** | **Tempo** | **Duration** | **Time signature** |
 |-----------|------------------|------------|----------|--------------|----------|-----------------|------------------|----------------------|--------------|-------------|-----------|--------------|--------------------|
