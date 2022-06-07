@@ -20,4 +20,4 @@ You can read our project report on our GitHub Pages site: [Predicting Track Genr
 - pandas >= 1.4.2
 - scikit-learn >= 1.1.1
 - scikit-multilearn >= 0.2.0
-- Spotify Web API Client ID and Client Secret Keys (set as environment variables `SPOTIFY_CLIENT_ID` and `SPOTIFY_CLIENT_SECRET` respectively)
+- Spotify Web API Client ID and Client Secret Keys (set as `SPOTIFY_CLIENT_ID` and `SPOTIFY_CLIENT_SECRET` in environment variables)
